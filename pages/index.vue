@@ -37,7 +37,7 @@
             />
           </main>
         </section>
-        <section class="movie-section">
+        <section v-if="newMovies.length >= 9" class="movie-section">
           <div class="movie-section__title">
             Dernières sorties
           </div>
@@ -109,7 +109,7 @@ export default {
       const maxElement = Math.floor((this.windowWidth - 30) / 320)
       return maxElement <= 6 ? maxElement : 6
     },
-    //P ermet d'afficher un nombre spécifique de grosse tuiles en fonction des dimensions du navigateur
+    // Permet d'afficher un nombre spécifique de grosse tuiles en fonction des dimensions du navigateur
     maxBigTitle() {
       if (this.windowWidth <= 1100) {
         return 1

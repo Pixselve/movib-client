@@ -146,7 +146,7 @@ export default {
     }
   },
   methods: {
-    //Permet de sauvegarder les données sur le serveur
+    // Permet de sauvegarder les données sur le serveur
     async saveData() {
       try {
         let dataToChange = {}
@@ -219,17 +219,14 @@ export default {
   }
 
   .param-container {
-    margin: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 900px;
+    margin: auto;
   }
 
   .general-param {
     display: flex;
     flex-direction: column;
     border-top: solid 5px #818181;
-    width: 50%;
     font-size: 15px;
     font-family: "Roboto", sans-serif;
     padding: 30px;
@@ -240,7 +237,6 @@ export default {
     display: flex;
     flex-direction: column;
     border-top: solid 5px #818181;
-    width: 50%;
     font-size: 15px;
     font-family: "Roboto", sans-serif;
     padding: 30px;
@@ -290,7 +286,6 @@ export default {
   }
 
   input {
-    border: none;
     margin: 10px;
     padding: 10px;
     border: 2px solid #222428;
@@ -299,7 +294,7 @@ export default {
     transition: border-color 0.5s;
     outline: none;
     color: white;
-    width: 90%;
+    width: 100%;
   }
 
   input:focus {

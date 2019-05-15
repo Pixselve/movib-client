@@ -3,39 +3,75 @@
   <div>
     <movie-backdrop-overlay class="header" :backdrop="movie.movie.backdrop">
       <div class="header__content">
-        <img class="movie-poster" :src="`https://image.tmdb.org/t/p/original${movie.movie.poster.path}`" alt="Poster">
-        <div class="header__content__movie-information">
-          <div class="header__content__movie-information__title">
-            {{ movie.movie.title }}
-          </div>
-          <div class="header__content__movie-information__genres">
-            <span v-for="genre in movie.movie.genres" :key="genre.id">{{ genre.name }}</span>
-          </div>
-          <div class="header__content__movie-information__plot">
-            {{ movie.movie.plot }}
-          </div>
-          <div class="header__content__movie-information__actions">
-            <science action="follow" :tmdb-id="movie.movie.tmdbId">
-              <mb-button
-                :loading="followLoading"
-                round
-                :text="movie.followed ? 'Ajouté' : 'Ajouter le film à ma bibliotèque'"
-                :icon="movie.followed ? 'fal fa-check' : 'fal fa-plus'"
-                @click="follow"
-              />
-            </science>
-            <science action="follow" :tmdb-id="movie.movie.tmdbId">
-              <mb-button
-                :loading="watchLoading"
-                round
-                :text="movie.watched ? 'Je n\'ai pas vu' : 'J\'ai vu'"
-                :icon="movie.watched ? 'fal fa-eye-slash' : 'fal fa-eye'"
-                @click="watch"
-              />
-            </science>
-            <rating :value="movie.rating" class="rating" @input="rating" />
+        <div class="header__content__line">
+          <img class="movie-poster" :src="`https://image.tmdb.org/t/p/original${movie.movie.poster.path}`" alt="Poster">
+          <div class="header__content__movie-information">
+            <div class="header__content__movie-information__title">
+              {{ movie.movie.title }}
+            </div>
+            <div class="bottom-title">
+              <div class="header__content__movie-information__genres">
+                <span v-for="genre in movie.movie.genres" :key="genre.id">{{ genre.name }}</span>
+              </div>
+              <div class="header__content__movie-information__plot">
+                {{ movie.movie.plot }}
+              </div>
+              <div class="header__content__movie-information__actions">
+                <science action="follow" :tmdb-id="movie.movie.tmdbId">
+                  <mb-button
+                    :loading="followLoading"
+                    round
+                    :text="movie.followed ? 'Ajouté' : 'Ajouter le film à ma bibliotèque'"
+                    :icon="movie.followed ? 'fal fa-check' : 'fal fa-plus'"
+                    @click="follow"
+                  />
+                </science>
+                <science action="follow" :tmdb-id="movie.movie.tmdbId">
+                  <mb-button
+                    :loading="watchLoading"
+                    round
+                    :text="movie.watched ? 'Je n\'ai pas vu' : 'J\'ai vu'"
+                    :icon="movie.watched ? 'fal fa-eye-slash' : 'fal fa-eye'"
+                    @click="watch"
+                  />
+                </science>
+                <rating :value="movie.rating" class="rating" @input="rating" />
+              </div>
+            </div>
           </div>
         </div>
+        <div class="header__content__line header__content__line--hide-width">
+          <div class="header__sub__content">
+            <div class="header__content__movie-information__genres">
+              <span v-for="genre in movie.movie.genres" :key="genre.id">{{ genre.name }}</span>
+            </div>
+            <div class="header__content__movie-information__plot">
+              {{ movie.movie.plot }}
+            </div>
+            <div class="header__content__movie-information__actions">
+              <science action="follow" :tmdb-id="movie.movie.tmdbId">
+                <mb-button
+                  :loading="followLoading"
+                  round
+                  :text="movie.followed ? 'Ajouté' : 'Ajouter le film à ma bibliotèque'"
+                  :icon="movie.followed ? 'fal fa-check' : 'fal fa-plus'"
+                  @click="follow"
+                />
+              </science>
+              <science action="follow" :tmdb-id="movie.movie.tmdbId">
+                <mb-button
+                  :loading="watchLoading"
+                  round
+                  :text="movie.watched ? 'Je n\'ai pas vu' : 'J\'ai vu'"
+                  :icon="movie.watched ? 'fal fa-eye-slash' : 'fal fa-eye'"
+                  @click="watch"
+                />
+              </science>
+              <rating :value="movie.rating" class="rating" @input="rating" />
+            </div>
+          </div>
+        </div>
+
       </div>
     </movie-backdrop-overlay>
     <main class="details">
@@ -44,10 +80,26 @@
       </div>
       <div class="details__content">
         <movie-detail v-if="movie.movie.originalTitle" name="Titre original" :content="movie.movie.originalTitle" />
-        <movie-detail v-if="movie.movie.originalLanguage" name="Langue originale" :content="parseLang(movie.movie.originalLanguage)" />
-        <movie-detail v-if="movie.movie.releaseDate" name="Date de sortie" :content="new Date(movie.movie.releaseDate).toLocaleDateString('fr-FR')" />
-        <movie-detail v-if="movie.movie.budget" name="Budget" :content="new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'USD' }).format(movie.movie.budget)" />
-        <movie-detail v-if="movie.movie.revenue" name="Revenue généré par le film" :content="new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'USD' }).format(movie.movie.revenue)" />
+        <movie-detail
+          v-if="movie.movie.originalLanguage"
+          name="Langue originale"
+          :content="parseLang(movie.movie.originalLanguage)"
+        />
+        <movie-detail
+          v-if="movie.movie.releaseDate"
+          name="Date de sortie"
+          :content="new Date(movie.movie.releaseDate).toLocaleDateString('fr-FR')"
+        />
+        <movie-detail
+          v-if="movie.movie.budget"
+          name="Budget"
+          :content="new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'USD' }).format(movie.movie.budget)"
+        />
+        <movie-detail
+          v-if="movie.movie.revenue"
+          name="Revenue généré par le film"
+          :content="new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'USD' }).format(movie.movie.revenue)"
+        />
         <movie-detail v-if="movie.movie.runtime" name="Durée du film" :content="`${movie.movie.runtime} minutes`" />
       </div>
     </main>
@@ -159,6 +211,9 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    @media screen and (max-width: 900px) {
+      padding: 100px 20px 100px;
+    }
   }
 
   .overlay {
@@ -172,19 +227,29 @@ export default {
   .header__content {
     position: relative;
     z-index: 10;
-    display: flex;
-    align-items: flex-end;
     max-width: 1200px;
   }
-
+  .header__content__line {
+    display: flex;
+    align-items: flex-end;
+  }
   .movie-poster {
     height: 450px;
     box-shadow: rgba(0, 0, 0, 0.52) 0 0 40px 1px;
+    @media screen and (max-width: 970px) {
+      height: 250px;
+    }
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
   }
 
   .header__content__movie-information {
     margin-left: 20px;
     color: $main-text-light;
+    @media screen and (max-width: 500px) {
+      margin-left: 0;
+    }
   }
 
   .header__content__movie-information__title {
@@ -227,5 +292,31 @@ export default {
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 10px;
     margin-top: 20px;
+    @media screen and (max-width: 1500px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    @media screen and (max-width: 1150px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @media screen and (max-width: 800px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 600px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 400px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  .bottom-title {
+    @media screen and (max-width: 970px) {
+      display: none;
+    }
+  }
+  .header__content__line--hide-width {
+    display: none;
+    @media screen and (max-width: 970px) {
+      display: block;
+    }
   }
 </style>
